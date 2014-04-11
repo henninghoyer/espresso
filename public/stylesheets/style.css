@@ -130,3 +130,7 @@ select {
 button {
     margin-top: 1.7rem;
 }
+
+#debugout {
+    height: 1.2rem;
+}
