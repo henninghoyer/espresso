@@ -30,7 +30,9 @@ function submitClickHandler(event) {
 
 $(document).ready(function() {
   //handle click or touch event on submit button
-  $("#btnSubmit").click(
-    submitClickHandler
-  );
+  $("#btnSubmit").on('click', submitClickHandler);
+  $("#category").on('change', function() {
+    $("#category").toggleClass('inactive');
+    $("#category").off('change');
+  });
 });

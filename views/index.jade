@@ -3,13 +3,15 @@ extends layout
 block content
   #wrapper
     header
-      h1= title
+      //- h1= title
+      h2 Track Spending
     form#inputForm
-      label(for='amount') Amount
-      input(type='number',name='amount',min='0.01',step='0.01')
-      label(for='category') Spent On
-      select(name='category')
+      //- label(for='Amount') Amount
+      input(type='number',name='amount',min='0.01',step='0.01',placeholder='Amount')
+      //- label(for='category') Spent On
+      select(id='category',name='category',class='inactive')
+        option(value='',selected,disabled,default) Select a Category
         each item in clist
           option(value='#{item.value}') #{item.name}
-      button#btnSubmit(type="submit") submit
+      button#btnSubmit(type="submit") Submit
     #debugout
