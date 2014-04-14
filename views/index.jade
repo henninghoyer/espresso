@@ -4,7 +4,7 @@ block content
   #wrapper
     header
       //- h1= title
-      h2 Track Spending
+      h1 Track Spending
     form#inputForm
       //- label(for='Amount') Amount
       input(type='number',name='amount',min='0.01',step='0.01',placeholder='Amount')
@@ -14,4 +14,4 @@ block content
         each item in clist
           option(value='#{item.value}') #{item.name}
       button#btnSubmit(type="submit") Submit
-    #debugout
+      #debugout

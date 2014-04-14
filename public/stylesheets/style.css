@@ -68,8 +68,9 @@ del{
 \*------------------------------------*/
 body {
     font-size: 100%; /*should be 16px*/
-    background-color: #CCC;
+    background-color: #eee;
     color: #333;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #wrapper {
@@ -78,13 +79,10 @@ body {
     text-align: center;
 }
 
-#debugout {
-    border: 1px solid #000;
-}
-
-header > h1 {
-    font-size: 48px; /*fallback for those browsers not supporting rem*/
-    font-size: 3rem;
+header {
+    font-size: 36px; /*fallback for those browsers not supporting rem*/
+    font-size: 2.25rem;
+    font-family: 'Poiret One', cursive;
 }
 
 h1 {
@@ -113,36 +111,34 @@ form {
     font-size: 1.3125rem;
 }
 
-/*label {
-    float: left;
-    margin-right: 0.625rem;
-    margin-top: 1rem;
-    margin-bottom: 0.25rem;
-}*/
-
 input {
     width: 95%;
     font-size: 1.3125rem;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     margin-bottom: 0.25rem;
+    font-family: 'Open Sans', sans-serif;
 }
 
 select {
     width: 100%;
     font-size: 1.3125rem;
     height: 2.1rem;
-    margin-top: 1rem;
+    margin-top: 1.75rem;
     margin-bottom: 0.25rem;
+    font-family: 'Open Sans', sans-serif;
 }
 
 button {
-    margin-top: 1.7rem;
+    margin-top: 2rem;
     font-size: 1.3125rem;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #debugout {
-    font-size: 1.1rem;
+    font-size: 1.75rem;
     height: 1.3rem;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 1rem;
 }
 
 /*Utility classes*/
