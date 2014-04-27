@@ -73,6 +73,26 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+nav {
+    height: 2rem;
+    font-size: 1.2rem;
+    text-align: center;
+    width: 100%;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    padding-top: 0.4rem;
+    padding-bottom: 0.3rem;
+    float: left;
+    width: 33.3%;
+    list-style-type: none;
+}
+
 #wrapper {
     max-width: 20rem;
     margin: 2rem auto;

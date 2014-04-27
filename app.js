@@ -31,6 +31,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.inputview(db));
+app.get('/report', routes.reportview(db));
 // app.get('/additem', routes.additem(db));
 app.post('/additem', routes.additem(db));
 // app.get('/users', user.list);

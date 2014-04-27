@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  nav
+    ul
+      li 
+        a(href='/') Track
+      li 
+        a(href='/report') Report
+      li
+        a(href='/about') About
+  #wrapper
+    div(class='navtab')
+      //- h1= title
+      button#btnToday Today
+      button#btnMonth Month
+    div(class='navcontent')
+      p add padding to navcontent
+      p show number? or stacked bar per category with top 2 and then other?
+      p Make sure buttons have the same font family as the header on tracking page

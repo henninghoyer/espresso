@@ -1,13 +1,11 @@
 //this will house the javascript to bind them all
 function submitClickHandler(event) {
   event.preventDefault();
-  var today = new Date().toDateString();
 
   //each record should contain three pieces of information. 1. Amount 2. Category 3. Timestamp
   var record = {
     'amount' : $('#inputForm > input[name="amount"]').val(),
-    'category' : $('#inputForm > select[name="category"]').val(),
-    'timestamp' : today
+    'category' : $('#inputForm > select[name="category"]').val()
   };
 
   $.ajax({
