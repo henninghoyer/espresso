@@ -16,20 +16,45 @@ exports.inputview = function(db) {
 exports.reportview = function(db) {
   // We'll start by rendering the daily spend overview,
   // so this is what we'll query the DB for at this point
-  // set hours ensures the time component is set to all
-  // 0's so we're basically dealing with midnight.
-  // var startDate, endDate;
-  // startDate = new Date();
-  // startDate.setHours(0,0,0,0);
-  // endDate = new Date();
-  // var day = startDate.getDate();
-  // endDate.setDate(day+1);
-  // endDate.setHours(0,0,0,0);
-  var startDate = new Date(2014, 3, 21);
-  var endDate = new Date(2014, 3, 22);
+  
+  // this seems to work on the mongo commandline
+  // db.expenses.find({added:{$gt: ISODate("2014-04-20T00:00:0.000Z"), $lt: ISODate("2014-04-22T00:00:00.000Z")}})
+  // it doesn't from javascript though, as ISODate is just a mongodb wrapper for the JS Date object.
+
+  // This does work. Finally... :)
+  return function(req, res) {
+    var map = function() {
+        emit( this.category, this.amount );
+    };
+    var reduce = function(key, values) {
+        return Array.sum(values);
+    };
+ 
+    var expSum = db.collection('expenses').mapReduce(
+      map,
+      reduce,
+      { query:
+        {
+          added: {$gte: new ISODate("2014-04-22")}
+        },
+        out: {inline: 1}
+      });
+    console.log(expSum);
+    // db.collection('expenses').find({added:{$gt: new Date("2014-04-20T00:00:0.000Z"), $lt: new Date("2014-04-22T00:00:00.000Z")}}).toArray(function (err, items) {
+      // if(err) {
+        // console.log(err);
+      // } else {
+        // console.log(items);
+        // res.render('report', {title: 'Espresso - Chill your Finances'});
+      // }
+    // });
+
+    // And this will return aggregated spend for a given day per category
+    // given the volume of data it really wouldn't make sense to pre-aggregate this on the server...
+    // db.expenses.mapReduce( function() {emit( this.category, this.amount ); }, function(key, values) { return Array.sum(values) },  { query: { added: {$gte: new ISODate("2014-04-22")}}, out: {inline: 1}})
 
 
-//   db.expenses.mapReduce( 
+    //   db.expenses.mapReduce( 
 //   function(){emit(this._id, this.amount);}, 
 //   function(key, values){return Array.sum(values);},
 //   {
@@ -37,14 +62,7 @@ exports.reportview = function(db) {
 //     out:"expense_totals"
 //   }
 // );
-  return function(req, res) {
-    db.collection('expenses').find({timestamp: startDate}).toArray(function (err, items) {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log(items);
-      }
-    });
+
     // db.collection('expenses').mapReduce(
     //   function() {
     //     emit(this._id, this.amount);
