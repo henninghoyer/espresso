@@ -10,11 +10,20 @@ block content
       li
         a(href='/about') About
   #wrapper
-    div(class='navtab')
+    //- div(class='navtab')
+    //-   //- h1= title
+    //-   button#btnToday Today
+    //-   button#btnMonth Month
+    header
       //- h1= title
-      button#btnToday Today
-      button#btnMonth Month
-    div(class='navcontent')
-      p add padding to navcontent
-      p show number? or stacked bar per category with top 2 and then other?
-      p Make sure buttons have the same font family as the header on tracking page
+      h1 Monthly Overview
+    div(class='maincontent')
+      each item in monthlySums
+        p #{item._id}: #{item.value}
+
+    //- div(class='navcontent')
+    //-   p add padding to navcontent
+    //-   p show number? or stacked bar per category with top 2 and then other?
+    //-   p Make sure buttons have the same font family as the header on tracking page
+    //-   each item in dailySums
+    //-     p #{item._id}: #{item.value}

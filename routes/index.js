@@ -14,7 +14,7 @@ exports.inputview = function(db) {
 };
 
 exports.reportview = function(db) {
-  // We'll start by rendering the daily spend overview,
+  // Return monthly spend data so far
   // so this is what we'll query the DB for at this point
   
   // this seems to work on the mongo commandline
@@ -24,17 +24,14 @@ exports.reportview = function(db) {
   // This does work. Finally... :)
   return function(req, res) {
     var td = new Date();
-    var day = td.getDate();
+    var day = '01';
     var month = td.getMonth()+1;
     var year = td.getFullYear();
 
-    if(day < 10) {
-      day = '0' + day;
-    }
     if(month < 10) {
       month = '0' + month;
     }
-    var today = year + '-' + month + '-' + day;
+    var startDate = year + '-' + month + '-' + day;
 
     var ary = db.collection('expenses').mapReduce(
       function() {
@@ -46,13 +43,19 @@ exports.reportview = function(db) {
       {
         query:
         {
-          added: {$gte: new Date(today)}
+          added: {$gte: new Date(startDate)}
         },
         out: {inline: 1}
       },
       function(key, reducedVal) {
-        res.render('report', {'dailySums': reducedVal});
-        // console.log(reducedVal.length);
+        var ovrlSum = 0;
+
+        for (var i = 0; i < reducedVal.length; i++) {
+          ovrlSum += parseFloat(reducedVal[i].value,10);
+        }
+        reducedVal.push({'_id': 'Total', 'value': ovrlSum});
+
+        res.render('report', {'monthlySums': reducedVal});
       }
     );//mapReduce
   };//return function
