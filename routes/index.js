@@ -33,7 +33,8 @@ exports.reportview = function(db) {
     }
     var startDate = year + '-' + month + '-' + day;
 
-    var ary = db.collection('expenses').mapReduce(
+    // get total sum of all transactions in the month
+    var monthlySums = db.collection('expenses').mapReduce(
       function() {
         emit(this.category, this.amount);
       },
@@ -48,16 +49,26 @@ exports.reportview = function(db) {
         out: {inline: 1}
       },
       function(key, reducedVal) {
+        //compute total sum of all transactions
         var ovrlSum = 0;
 
         for (var i = 0; i < reducedVal.length; i++) {
           ovrlSum += parseFloat(reducedVal[i].value,10);
         }
-        reducedVal.push({'_id': 'Total', 'value': ovrlSum});
 
-        res.render('report', {'monthlySums': reducedVal});
-      }
-    );//mapReduce
+        //sort the array based on sum of the categories 
+        reducedVal.sort(function(a, b) {
+          return b.value - a.value;
+        });
+
+        //add an entry with the total spend to the start of the array
+        reducedVal.unshift({'_id': 'Total Spend', 'value': ovrlSum}); //make sure the Total Spend comes first in the Array. Saves work later.
+
+        //render view with the first four items of the array (total + top three)
+        res.render('report', {'monthlySums': reducedVal.slice(0,4)});
+        // res.render('report', {'monthlySums': reducedVal});
+      }//finalize function
+    );
   };//return function
 };//reportview
 
