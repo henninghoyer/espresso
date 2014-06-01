@@ -120,9 +120,26 @@ h3 {
     font-size: 1.3125rem;
 }
 
-p {
-    font-size: 16px; /*fallback for those browsers not supporting rem*/
+/*p {
+    font-size: 16px; fallback for those browsers not supporting rem
     font-size: 1rem;
+}*/
+
+.maincontent {
+    margin: 2rem auto 2rem auto;
+    font-size: 21px;
+    font-size: 1.3125rem;
+}   
+
+.maincontent > table {
+    width: 65%;
+    margin: 2rem auto 2rem auto;
+    text-align: left;
+}
+
+.maincontent > table tr:first-child {
+    font-weight: bold;
+    padding-bottom: 1rem;
 }
 
 form {
