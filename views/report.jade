@@ -18,8 +18,16 @@ block content
       //- h1= title
       h1 Monthly Overview
     div(class='maincontent')
-      each item in monthlySums
-        p #{item._id}: #{item.value}
+      //- what we actually want is a div for the total and
+      //- a table for the top three or five categories
+      table
+        each item in monthlySums
+          tr
+            td #{item._id}:
+            td #{item.value}
+          if( item._id == 'Total Spend' )
+            tr
+              td &nbsp;       
 
     //- div(class='navcontent')
     //-   p add padding to navcontent
