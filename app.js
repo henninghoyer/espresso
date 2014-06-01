@@ -9,7 +9,9 @@ var http = require('http');
 var path = require('path');
 // var mongo = require('mongodb');
 var mongo = require('mongoskin');
-var db = mongo.db('mongodb://localhost:27017/finance', {native_parser:true});
+// var db = mongo.db('mongodb://localhost:27017/finance', {native_parser:true});
+var db = mongo.db('mongodb://hofinadmin:sekret7@kahana.mongohq.com:10070/finance', {native_parser:true});
+//could also use MONGOHQ_URL which may be better on Heroku...
 
 var app = express();
 
