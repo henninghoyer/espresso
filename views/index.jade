@@ -22,4 +22,6 @@ block content
         each item in clist
           option(value='#{item.value}') #{item.name}
       button#btnSubmit(type="submit") Submit
-      #debugout
+      #debugout 
+        span(class='msg-save') Saving Record...
+        span(class='fa fa-check')

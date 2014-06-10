@@ -178,7 +178,15 @@ button {
     margin-top: 1rem;
 }
 
+#debugout span {
+    display: none;
+}
+
 /*Utility classes*/
+.fa-check {
+    color: green;
+}
+
 .inactive {
     color: gray;
 }

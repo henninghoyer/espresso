@@ -12,12 +12,18 @@ function submitClickHandler(event) {
     type: 'POST',
     data: record,
     url: '/additem',
-    dataType: 'JSON'
+    dataType: 'JSON',
+    beforeSend: function() {
+      $('#debugout .msg-save').toggle();
+    }
   })
     .done(function(response) {
       //empty string means success
       if(response.msg === '') {
-        $('#debugout').text('Record has been saved.');
+        $('#debugout .msg-save').toggle();
+        $('#debugout .fa').toggle(600);
+        $('#debugout .fa').toggle(2000);
+
         //clear input
         $('#inputForm > input[name="amount"]').val('');
       } else {
