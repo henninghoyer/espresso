@@ -22,7 +22,7 @@ function submitClickHandler(event) {
       if(response.msg === '') {
         $('#debugout .msg-save').toggle();
         $('#debugout .fa').toggle(600);
-        $('#debugout .fa').toggle(2000);
+        $('#debugout .fa').toggle(4000);
 
         //clear input
         $('#inputForm > input[name="amount"]').val('');
