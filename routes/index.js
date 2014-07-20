@@ -36,7 +36,7 @@ exports.reportview = function(db) {
     // get total sum of all transactions in the month
     var monthlySums = db.collection('expenses').mapReduce(
       function() {
-        emit(this.category, this.amount);
+        emit(this.category, (Math.ceil(this.amount * 100) / 100));
       },
       function(key, values) {
         return Array.sum(values);
