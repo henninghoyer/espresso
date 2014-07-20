@@ -61,6 +61,8 @@ exports.reportview = function(db) {
           return b.value - a.value;
         });
 
+        ovrlSum = Math.ceil(ovrlSum * 100) / 100;
+
         //add an entry with the total spend to the start of the array
         reducedVal.unshift({'_id': 'Total Spend', 'value': ovrlSum}); //make sure the Total Spend comes first in the Array. Saves work later.
 
@@ -74,7 +76,7 @@ exports.reportview = function(db) {
 
 exports.additem = function(db) {
   return function(req, res) {
-    db.collection('expenses').insert({amount: req.body.amount, category: req.body.category, added: new Date()}, function(err, result) {
+    db.collection('expenses').insert({amount: parseFloat(req.body.amount), category: req.body.category, added: new Date()}, function(err, result) {
       res.send(
         (err === null) ? { msg: '' } : { msg: err }
       );
