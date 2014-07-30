@@ -7,7 +7,7 @@
 
 exports.inputview = function(db) {
   return function(req, res){
-    db.collection('categories').find().toArray(function (err, items) {
+    db.collection('categories').find({parent: {$exists: true} }).sort({_id: 1}).toArray(function (err, items) {
       res.render('index', {title: 'Espresso - Chill your Finances', 'clist': items });
     });
   };
