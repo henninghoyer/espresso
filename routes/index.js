@@ -79,10 +79,17 @@ exports.reportview = function(db) {
 
 exports.additem = function(db) {
   return function(req, res) {
-    db.collection('expenses').insert({amount: parseFloat(req.body.amount), category: req.body.category, added: new Date()}, function(err, result) {
-      res.send(
-        (err === null) ? { msg: '' } : { msg: err }
-      );
+    db.collection('categories').find({ name: req.body.category }).toArray(function(err, result){
+      var parentid = result[0].parent; //parent now holds the parent ID to the selected category
+      db.collection('categories').find({_id: parentid}).toArray(function(err, result){
+        var parentname = result[0].name;
+
+        db.collection('expenses').insert({amount: parseFloat(req.body.amount), category: {l1: parentname, l2: req.body.category}, added: new Date()}, function(err, result) {
+          res.send(
+            (err === null) ? { msg: '' } : { msg: err }
+          );
+        });
+      });
     });
   };
 };
