@@ -39,10 +39,8 @@ exports.reportview = function(db) {
         emit(this.category, this.amount);
       },
       function(key, values) {
-        return (Math.ceil(Array.sum(values) * 100) / 100);
-        //rounding needs to occur here, won't work reliably 
-        //otherwise. In addition, Array.sum returns a number 
-        //(float in this case) so this should work. 
+        return Math.ceil(Array.sum(values) / 100);
+        //DB stores values * 100 so we need to get them 
       },
       {
         query:
@@ -56,7 +54,7 @@ exports.reportview = function(db) {
         var ovrlSum = 0;
 
         for (var i = 0; i < reducedVal.length; i++) {
-          ovrlSum += parseFloat(reducedVal[i].value,10);
+          ovrlSum += parseFloat(reducedVal[i].value);
         }
 
         //sort the array based on sum of the categories 
@@ -64,7 +62,7 @@ exports.reportview = function(db) {
           return b.value - a.value;
         });
 
-        ovrlSum = Math.ceil(ovrlSum * 100) / 100;
+        ovrlSum = Math.ceil(ovrlSum / 100);
 
         //add an entry with the total spend to the start of the array
         reducedVal.unshift({'_id': 'Total Spend', 'value': ovrlSum}); //make sure the Total Spend comes first in the Array. Saves work later.
@@ -83,8 +81,8 @@ exports.additem = function(db) {
       var parentid = result[0].parent; //parent now holds the parent ID to the selected category
       db.collection('categories').find({_id: parentid}).toArray(function(err, result){
         var parentname = result[0].name;
-
-        db.collection('expenses').insert({amount: parseFloat(req.body.amount), category: {l1: parentname, l2: req.body.category}, added: new Date()}, function(err, result) {
+        //(parseFloat(req.body.amount)*100) - make sure we are ready for exact precision on the server side
+        db.collection('expenses').insert({amount: (parseFloat(req.body.amount)*100), category: {l1: parentname, l2: req.body.category}, added: new Date()}, function(err, result) {
           res.send(
             (err === null) ? { msg: '' } : { msg: err }
           );
