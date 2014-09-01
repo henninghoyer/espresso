@@ -36,11 +36,12 @@ exports.reportview = function(db) {
     // get total sum of all transactions in the month
     var monthlySums = db.collection('expenses').mapReduce(
       function() {
-        emit(this.category, this.amount);
+        //DB stores values * 100 so we need to get them sorted
+        //report on highest level
+        emit(this.category.l1, (this.amount/100));
       },
       function(key, values) {
-        return Math.ceil(Array.sum(values) / 100);
-        //DB stores values * 100 so we need to get them 
+        return Math.ceil(Array.sum(values));
       },
       {
         query:
@@ -62,7 +63,7 @@ exports.reportview = function(db) {
           return b.value - a.value;
         });
 
-        ovrlSum = Math.ceil(ovrlSum / 100);
+        ovrlSum = Math.ceil(ovrlSum);
 
         //add an entry with the total spend to the start of the array
         reducedVal.unshift({'_id': 'Total Spend', 'value': ovrlSum}); //make sure the Total Spend comes first in the Array. Saves work later.
