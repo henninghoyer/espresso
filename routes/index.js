@@ -78,10 +78,10 @@ exports.reportview = function(db) {
 
 exports.additem = function(db) {
   return function(req, res) {
-    db.collection('categories').find({ name: req.body.category }).toArray(function(err, result){
+    db.collection('categories').find({ value: req.body.category }).toArray(function(err, result){
       var parentid = result[0].parent; //parent now holds the parent ID to the selected category
       db.collection('categories').find({_id: parentid}).toArray(function(err, result){
-        var parentname = result[0].name;
+        var parentname = result[0].value;
         //(parseFloat(req.body.amount)*100) - make sure we are ready for exact precision on the server side
         db.collection('expenses').insert({amount: (parseFloat(req.body.amount)*100), category: {l1: parentname, l2: req.body.category}, added: new Date()}, function(err, result) {
           res.send(
